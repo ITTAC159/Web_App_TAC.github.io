@@ -28,7 +28,7 @@ const portalData = [
             {
                 title: 'บริการความช่วยเหลือ (IT Support)',
                 links: [
-                    { title: 'ระบบแจ้งซ่อม IT (Helpdesk System)', url: 'https://helpdesk.example.com', type: 'web' },
+                    { title: 'ระบบแจ้งซ่อม IT (Helpdesk System)', url: `https://apps.powerapps.com/play/e/default-d7cb89dc-f748-4a69-9ffc-7dc54794aff5/a/9d77669f-bebd-42f9-a86e-db439684169e?source=teamsopenwebsite&screenColor=rgba(0%2C%20176%2C%20240%2C%201)&hint=362c3461-6fd1-4cb6-84be-da419a0e8abd&tenantId=d7cb89dc-f748-4a69-9ffc-7dc54794aff5`, type: 'web' },
                 ]
             },
             {
