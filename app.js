@@ -5,69 +5,13 @@
 let currentDepartmentId = null;
 
 // อ้างอิง Elements จาก HTML
-const menuList = document.getElementById('menuList');
 const contentContainer = document.getElementById('contentContainer');
 const headerTitle = document.getElementById('headerTitle');
 const headerSubtitle = document.getElementById('headerSubtitle');
 const mobileHeaderTitle = document.getElementById('mobileHeaderTitle');
 const mobileHeaderSubtitle = document.getElementById('mobileHeaderSubtitle');
 
-// Mobile Sidebar Elements
-const sidebar = document.getElementById('sidebar');
-const sidebarOverlay = document.getElementById('sidebarOverlay');
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const closeSidebarBtn = document.getElementById('closeSidebarBtn');
 
-// ฟังก์ชันเปิด/ปิด เมนูด้านข้าง (สำหรับมือถือ)
-function toggleSidebar() {
-    const isClosed = sidebar.classList.contains('-translate-x-full');
-    if (isClosed) {
-        sidebar.classList.remove('-translate-x-full');
-        sidebarOverlay.classList.remove('hidden');
-    } else {
-        sidebar.classList.add('-translate-x-full');
-        sidebarOverlay.classList.add('hidden');
-    }
-}
-
-mobileMenuBtn.addEventListener('click', toggleSidebar);
-closeSidebarBtn.addEventListener('click', toggleSidebar);
-sidebarOverlay.addEventListener('click', toggleSidebar);
-
-// ฟังก์ชันสร้างเมนูใน Sidebar
-function renderMenu() {
-    menuList.innerHTML = '';
-    portalData.forEach(dept => {
-        const li = document.createElement('li');
-        
-        const btn = document.createElement('button');
-        const isActive = currentDepartmentId === dept.id;
-        
-        // รูปแบบคลาสของปุ่มเมนู (เปลี่ยนสีเมื่อถูกเลือก)
-        btn.className = `w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 
-            ${isActive 
-                ? 'bg-corporate-blue text-white shadow-md font-medium' 
-                : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
-        
-        btn.innerHTML = `
-            <div class="${isActive ? 'bg-white/20' : 'bg-slate-700/50'} w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors">
-                <i class="fa-solid ${dept.icon} ${isActive ? 'text-white' : 'text-slate-400'}"></i>
-            </div>
-            <span class="flex-1 truncate">${dept.name}</span>
-        `;
-        
-        btn.onclick = () => {
-            selectDepartment(dept.id);
-            // ปิดเมนูอัตโนมัติบนมือถือเมื่อกดเลือก
-            if (window.innerWidth < 1024) { 
-                toggleSidebar();
-            }
-        };
-        
-        li.appendChild(btn);
-        menuList.appendChild(li);
-    });
-}
 
 // ฟังก์ชันเลือกไอคอนตามประเภทของลิงก์ (PDF หรือ Web)
 function getIconHtml(type) {
@@ -147,14 +91,54 @@ function selectDepartment(id) {
     contentContainer.classList.add('animate-fade-in');
     
     contentContainer.innerHTML = contentHtml;
-    
-    // วาดเมนูใหม่เพื่อให้ไฮไลต์แผนกที่ถูกเลือกอยู่
-    renderMenu();
+
 }
+
+// ฟังก์ชันสำหรับวาดหน้าแรก (Home Dashboard)
+function renderHome() {
+    currentDepartmentId = null;
+    
+    headerTitle.textContent = 'หน้าแรก (Home)';
+    headerSubtitle.textContent = 'ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน';
+    mobileHeaderTitle.textContent = 'หน้าแรก (Home)';
+    mobileHeaderSubtitle.textContent = 'ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน';
+
+    let contentHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">';
+    
+    portalData.forEach(dept => {
+        contentHtml += `
+            <div onclick="selectDepartment('${dept.id}')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 cursor-pointer group flex flex-col h-full">
+                <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-blue-100 transition-all">
+                    <i class="fa-solid ${dept.icon} text-2xl text-corporate-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-corporate-blue transition-colors">${dept.name}</h3>
+                <p class="text-sm text-slate-500 flex-1">${dept.description}</p>
+                <div class="mt-4 flex items-center gap-2 text-sm font-medium text-corporate-blue opacity-0 group-hover:opacity-100 transition-opacity">
+                    ดูรายละเอียด <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        `;
+    });
+    
+    contentHtml += '</div>';
+
+    contentContainer.classList.remove('animate-fade-in');
+    void contentContainer.offsetWidth; 
+    contentContainer.classList.add('animate-fade-in');
+    
+    contentContainer.innerHTML = contentHtml;
+
+}
+
+// โลโก้คลิกกลับหน้าแรก
+const logoBtn = document.getElementById('logoBtn');
+const mobileLogoBtn = document.getElementById('mobileLogoBtn');
+if (logoBtn) logoBtn.addEventListener('click', renderHome);
+if (mobileLogoBtn) mobileLogoBtn.addEventListener('click', renderHome);
 
 // เริ่มต้นการทำงานของหน้าเว็บ
 function init() {
-    renderMenu();
+    renderHome();
 }
 
 // สั่งทำงานเมื่อโหลดไฟล์
