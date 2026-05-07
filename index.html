@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Portal | ศูนย์รวมข้อมูลสำหรับพนักงาน</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        corporate: {
+                            light: '#475569',   // สีเทาอ่อน (slate-600)
+                            DEFAULT: '#1e293b', // สีเมนูหลัก (slate-800)
+                            dark: '#0f172a',    // สีหัวเมนู (slate-900)
+                            blue: '#1e3a8a',    // สีน้ำเงินองค์กร (blue-900)
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Sarabun for Thai) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen overflow-hidden flex">
+
+    <!-- แถบด้านบนสำหรับมือถือ (Mobile Header) -->
+    <div class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-corporate-blue text-white z-40 flex items-center justify-between px-4 shadow-md">
+        <div class="flex items-center gap-3">
+            <button id="mobileMenuBtn" class="text-2xl p-1 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <h1 class="text-lg font-bold">Employee Portal</h1>
+        </div>
+        <i class="fa-solid fa-circle-user text-2xl text-blue-200"></i>
+    </div>
+
+    <!-- ฉากหลังสีดำโปร่งแสงตอนเปิดเมนูมือถือ -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+
+    <!-- แถบเมนูด้านซ้าย (Sidebar) -->
+    <aside id="sidebar" class="bg-corporate text-white w-72 h-full flex flex-col fixed lg:static z-50 transform -translate-x-full lg:translate-x-0 sidebar-transition shadow-xl">
+        <!-- โลโก้/ชื่อระบบ สำหรับ Desktop -->
+        <div class="h-16 items-center px-6 bg-corporate-dark hidden lg:flex justify-between border-b border-slate-700">
+            <h1 class="text-xl font-bold flex items-center gap-3">
+                <i class="fa-solid fa-layer-group text-blue-400"></i>
+                Employee Portal
+            </h1>
+        </div>
+        
+        <!-- ส่วนหัวของเมนู สำหรับ Mobile -->
+        <div class="h-16 flex items-center px-6 bg-corporate-dark lg:hidden justify-between border-b border-slate-700">
+            <h1 class="text-lg font-bold text-slate-200">เลือกแผนก</h1>
+            <button id="closeSidebarBtn" class="text-2xl text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- รายการเมนูแผนกต่างๆ -->
+        <nav class="flex-1 overflow-y-auto py-6 px-3">
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-3">Departments</div>
+            <ul id="menuList" class="space-y-1">
+                <!-- ข้อมูลเมนูจะถูกสร้างอัตโนมัติด้วย JavaScript -->
+            </ul>
+        </nav>
+
+        <!-- ส่วนท้ายของ Sidebar -->
+        <div class="p-4 bg-corporate-dark border-t border-slate-700 text-xs text-slate-400 text-center flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved text-slate-500"></i>
+            Internal Use Only
+        </div>
+    </aside>
+
+    <!-- ส่วนเนื้อหาหลัก (Main Content Area) -->
+    <main class="flex-1 h-full flex flex-col pt-16 lg:pt-0 overflow-y-auto relative">
+        
+        <!-- แถบด้านบนของเนื้อหา (Desktop Header) -->
+        <header class="h-20 bg-white shadow-sm hidden lg:flex items-center justify-between px-8 z-10 shrink-0 sticky top-0">
+            <div>
+                <h2 id="headerTitle" class="text-2xl font-bold text-corporate-blue">หน้าแรก (Home)</h2>
+                <p id="headerSubtitle" class="text-sm text-slate-500 mt-1">ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน</p>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-50 py-2 px-4 rounded-full border border-slate-100">
+                <div class="text-right">
+                </div>
+                <div class="w-10 h-10 rounded-full bg-corporate-blue flex items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- พื้นที่แสดงเนื้อหาด้านใน -->
+        <div class="p-4 md:p-8 flex-1 w-full max-w-6xl mx-auto pb-12">
+            
+            <!-- หัวข้อเนื้อหา สำหรับ Mobile -->
+            <div class="lg:hidden mb-6">
+                <h2 id="mobileHeaderTitle" class="text-2xl font-bold text-corporate-blue">หน้าแรก (Home)</h2>
+                <p id="mobileHeaderSubtitle" class="text-sm text-slate-500 mt-1">ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน</p>
+            </div>
+
+            <!-- กล่องคอนเทนต์ที่จะถูกอัปเดต -->
+            <div id="contentContainer" class="space-y-6 animate-fade-in">
+                <!-- ข้อมูลเริ่มต้นก่อนเลือกแผนก -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-12 text-center text-slate-500 my-10">
+                    <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-hand-pointer text-4xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-700 mb-2">ยังไม่ได้เลือกแผนก</h3>
+                    <p class="text-slate-500">กรุณาเลือกแผนกจากแถบเมนูด้านซ้าย เพื่อดูข้อมูล เอกสาร และลิงก์ระบบต่างๆ</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
