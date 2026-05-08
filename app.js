@@ -29,7 +29,7 @@ function getIconHtml(type) {
 function selectDepartment(id) {
     currentDepartmentId = id;
     const dept = portalData.find(d => d.id === id);
-    
+
     if (!dept) return;
 
     // อัปเดตชื่อหัวข้อ
@@ -40,7 +40,7 @@ function selectDepartment(id) {
 
     // สร้างเนื้อหา (HTML)
     let contentHtml = '';
-    
+
     dept.categories.forEach(category => {
         contentHtml += `
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -89,7 +89,7 @@ function selectDepartment(id) {
     contentContainer.classList.remove('animate-fade-in');
     void contentContainer.offsetWidth; // บังคับให้เบราว์เซอร์ลบแอนิเมชันเดิมก่อน
     contentContainer.classList.add('animate-fade-in');
-    
+
     contentContainer.innerHTML = contentHtml;
 
 }
@@ -97,14 +97,14 @@ function selectDepartment(id) {
 // ฟังก์ชันสำหรับวาดหน้าแรก (Home Dashboard)
 function renderHome() {
     currentDepartmentId = null;
-    
-    headerTitle.textContent = 'หน้าแรก (Home)';
-    headerSubtitle.textContent = 'ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน';
-    mobileHeaderTitle.textContent = 'หน้าแรก (Home)';
-    mobileHeaderSubtitle.textContent = 'ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน';
+
+    headerTitle.textContent = 'Welcome';
+    headerSubtitle.textContent = 'to the employee information center';
+    mobileHeaderTitle.textContent = 'Welcome';
+    mobileHeaderSubtitle.textContent = 'to the employee information center';
 
     let contentHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">';
-    
+
     portalData.forEach(dept => {
         contentHtml += `
             <div onclick="selectDepartment('${dept.id}')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 cursor-pointer group flex flex-col h-full">
@@ -119,13 +119,13 @@ function renderHome() {
             </div>
         `;
     });
-    
+
     contentHtml += '</div>';
 
     contentContainer.classList.remove('animate-fade-in');
-    void contentContainer.offsetWidth; 
+    void contentContainer.offsetWidth;
     contentContainer.classList.add('animate-fade-in');
-    
+
     contentContainer.innerHTML = contentHtml;
 
 }

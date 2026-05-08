@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Portal | ศูนย์รวมข้อมูลสำหรับพนักงาน</title>
+    <title>Thai auto conversion co.ltd | ศูนย์รวมข้อมูลสำหรับพนักงาน</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,6 +18,7 @@
                             DEFAULT: '#1e293b', // สีเมนูหลัก (slate-800)
                             dark: '#0f172a',    // สีหัวเมนู (slate-900)
                             blue: '#1e3a8a',    // สีน้ำเงินองค์กร (blue-900)
+                            red: '#dc2626',     // สีแดง (red-600)
                         }
                     },
                     fontFamily: {
@@ -46,8 +47,12 @@
     <div
         class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-corporate-blue text-white z-40 flex items-center justify-between px-4 shadow-md">
         <div class="flex items-center gap-3">
-            <i class="fa-solid fa-layer-group text-blue-200 text-xl"></i>
-            <h1 id="mobileLogoBtn" class="text-lg font-bold cursor-pointer">Employee Portal</h1>
+            <div class="w-8 h-8 overflow-hidden rounded-lg bg-white">
+                <img src="TAC-LOGO.png" alt="Company Logo" class="w-full h-full object-contain">
+            </div>
+
+            <h1 id="mobileLogoBtn" class="text-lg font-bold cursor-pointer text-corporate-red">Thai auto conversion co.
+                ltd</h1>
         </div>
     </div>
 
@@ -62,15 +67,17 @@
             <div class="flex items-center gap-6">
                 <div id="logoBtn"
                     class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity border-r border-slate-200 pr-6">
-                    <div class="w-10 h-10 bg-corporate-blue rounded-xl flex items-center justify-center">
-                        <i class="fa-solid fa-layer-group text-white text-lg"></i>
+                    <div class="w-10 h-10 overflow-hidden rounded-lg">
+                        <img src="TAC-LOGO.png" alt="Company Logo" class="w-full h-full object-contain">
+
                     </div>
-                    <span class="text-xl font-bold text-corporate-blue tracking-tight">Employee Portal</span>
+                    <span class="text-xl font-bold text-corporate-red tracking-tight">Thai auto conversion co.
+                        ltd</span>
                 </div>
                 <div>
-                    <h2 id="headerTitle" class="text-xl font-bold text-slate-800">หน้าแรก (Home)</h2>
+                    <h2 id="headerTitle" class="text-xl font-bold text-slate-800">Welcome</h2>
                     <p id="headerSubtitle" class="text-sm text-slate-500 mt-0.5">
-                        ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน</p>
+                        to the employee information center.</p>
                 </div>
             </div>
         </header>
@@ -80,9 +87,9 @@
 
             <!-- หัวข้อเนื้อหา สำหรับ Mobile -->
             <div class="lg:hidden mb-6">
-                <h2 id="mobileHeaderTitle" class="text-2xl font-bold text-corporate-blue">หน้าแรก (Home)</h2>
+                <h2 id="mobileHeaderTitle" class="text-2xl font-bold text-corporate-blue">Welcome</h2>
                 <p id="mobileHeaderSubtitle" class="text-sm text-slate-500 mt-1">
-                    ยินดีต้อนรับสู่ศูนย์รวมข้อมูลสำหรับพนักงาน</p>
+                    to the employee information center.</p>
             </div>
 
             <!-- กล่องคอนเทนต์ที่จะถูกอัปเดต -->
