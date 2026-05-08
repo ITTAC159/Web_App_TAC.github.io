@@ -143,3 +143,29 @@ function init() {
 
 // สั่งทำงานเมื่อโหลดไฟล์
 init();
+
+// ==========================================
+// ส่วนสำหรับระบบ Pull-to-Refresh
+// ==========================================
+let touchStart = 0;
+let touchEnd = 0;
+
+// 1. ตรวจจับจุดที่เริ่มแตะหน้าจอ
+window.addEventListener('touchstart', (e) => {
+    touchStart = e.targetTouches[0].pageY;
+}, { passive: true });
+
+// 2. ตรวจจับจุดที่ปล่อยนิ้ว
+window.addEventListener('touchend', (e) => {
+    touchEnd = e.changedTouches[0].pageY;
+    handleGesture();
+}, { passive: true });
+
+// 3. คำนวณว่าเป็นการลากลงหรือไม่
+function handleGesture() {
+    // ถ้าลากนิ้วลงมาเกิน 150 พิกเซล และอยู่ที่บนสุดของหน้าเว็บ
+    if (touchEnd - touchStart > 150 && window.scrollY === 0) {
+        // ทำการรีเฟรชข้อมูล (เรียกฟังก์ชันเริ่มต้นใหม่)
+        location.reload();
+    }
+}
